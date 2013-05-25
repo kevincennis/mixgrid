@@ -30,12 +30,14 @@
       this.set('startTime', now - position);
       this.set('maxTime', this.tracks.maxTime());
       this.tracks.play(now, position);
+      this.trigger('play');
       return this.set('playing', true);
     },
 
     // pause all tracks
     pause: function(){
-      this.tracks.pause()
+      this.tracks.pause();
+      this.trigger('pause');
       return this.set('playing', false);
     },
 
@@ -60,9 +62,10 @@
         , playing = this.get('playing')
         , start = this.get('startTime')
         , position = this.get('position')
-        , delta = now - start;
+        , delta = now - start
+        , recording = !!this.getRecordingTracks();
       playing && this.set('position', delta, {silent: true});
-      playing && delta > this.get('maxTime') && this.rewind();
+      playing && !recording && delta > this.get('maxTime') && this.rewind();
       setTimeout(this.updatePosition.bind(this), 16);
     },
 
@@ -87,6 +90,7 @@
       }
     },
 
+    // create a new track and add it to the tracks collection
     createTrack: function(name){
       this.tracks.add({
         name: name, 
@@ -96,6 +100,11 @@
         mix: this
       });
       return this.trigger('createTrack');
+    },
+
+    // returns the number of currently recording tracks
+    getRecordingTracks: function(){
+      return this.tracks.where({recording: true}).length;
     }
     
   });

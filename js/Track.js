@@ -18,6 +18,9 @@
       this.set('mute', ac.createGain());
       this.set('_mute', ac.createGain());
       this.set('gain', ac.createGain());
+      this.get('mix').on('pause', function(){
+        this.get('recording') && this.recordStop();
+      }.bind(this));
       this.connect();
     },
 
@@ -25,7 +28,8 @@
     connect: function(){
       this.get('input').connect(this.get('mute'));
       this.get('mute').connect(this.get('_mute'));
-      this.get('_mute').connect(this.get('output'));
+      this.get('_mute').connect(this.get('gain'));
+      this.get('gain').connect(this.get('output'));
       return this;
     },
 
@@ -127,6 +131,7 @@
           pro = null;
         }
       }.bind(this);
+      !mix.get('playing') && mix.play();
       mix.trigger('recordStart');
       return this.trigger('recordStart');
     },
