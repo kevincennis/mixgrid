@@ -6,7 +6,8 @@
     defaults: {
       muted: false,
       _muted: false,
-      soloed: false
+      soloed: false,
+      recording: false
     },
 
     // get things started
@@ -95,6 +96,74 @@
       this.set('soloed', false);
       this.get('mix').soloMute();
       return this;
+    },
+
+    // start recording
+    record: function(){
+      var ac = this.get('context')
+        , mix = this.get('mix')
+        , stream = mix.get('recStream')
+        , src = ac.createMediaStreamSource(stream)
+        , channels = src.channelCount
+        , pro = ac.createScriptProcessor(4096, channels, 1);
+      src.connect(pro);
+      pro.connect(ac.destination);
+      this.set('processor', pro);
+      this.set('recBuffers', []);
+      this.set('recLength', 0);
+      this.set('recording', true);
+      this.set('recordStart', mix.get('position'));
+      pro.onaudioprocess = function( evt ){
+        var inp = evt.inputBuffer
+          , ch = inp.getChannelData(0)
+          , f32 = new Float32Array(ch.length)
+          , recLength = this.get('recLength');
+        if ( this.get('recording') ){
+          f32.set(ch);
+          this.get('recBuffers').push(f32);
+          this.set('recLength', recLength + f32.length);
+        } else {
+          pro.onaudioprocess = null;
+          pro = null;
+        }
+      }.bind(this);
+      mix.trigger('recordStart');
+      return this.trigger('recordStart');
+    },
+
+    recordStop: function(){
+      var ac = this.get('context')
+        , arrBuffer = this.mergeRecBuffers()
+        , audioBuffer = ac.createBuffer(1, arrBuffer.length, ac.sampleRate);
+      audioBuffer.getChannelData(0).set(arrBuffer);
+      this.createRegion(audioBuffer);
+      this.set('recBuffers', []);
+      this.set('recLength', 0);
+      this.set('recording', false);
+      this.get('mix').trigger('recordStop');
+      return this.trigger('recordStop');
+    },
+
+    mergeRecBuffers: function(recBuffers, recLength){
+      var recBuffers = this.get('recBuffers')
+        , recLength = this.get('recLength')
+        , result = new Float32Array(recLength)
+        , offset = i = 0;
+      for ( ; i < recBuffers.length; i++ ){
+        result.set(recBuffers[i], offset);
+        offset += recBuffers[i].length;
+      }
+      return result;
+    },
+
+    createRegion: function( audioBuffer ){
+      this.regions.add({
+        buffer: audioBuffer,
+        context: this.get('context'),
+        start: this.get('recordStart'),
+        output: this.get('input'),
+        mix: this.get('mix')
+      });
     }
     
   });

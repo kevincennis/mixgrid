@@ -8,8 +8,7 @@
   function fetchMixData(){
     $.getJSON(mixURL, function( data ){
       createTracks( data, function(){
-        drawMix();
-        mix.play();
+        getInput();
       });
     });
   }
@@ -36,6 +35,7 @@
   // create our regions and add them to a track
   function createRegions( track, regions, callback ){
     var loaded = 0;
+    if ( !regions.length ) callback();
     regions.forEach(function( regionData ){
       var xhr = new XMLHttpRequest();
       xhr.open('GET', regionData.url, true);
@@ -59,6 +59,7 @@
   // see what the fuck i'm doing
   function drawMix(){
     var pps = 20;
+    $('section').remove();
     mix.tracks.forEach(function( track ){
       var $section = $('<section/>').appendTo('body');
       track.regions.forEach(function( region ){
@@ -86,11 +87,26 @@
     requestAnimationFrame(drawScrubber)
   }
 
+  function getInput(){
+    navigator.webkitGetUserMedia({audio: true}, function(stream){
+      mix.set('recStream', stream);
+      drawMix();
+      mix.play();
+    }, function(){
+
+    });
+  }
+
+  mix.on('createTrack', drawMix);
+  mix.on('recordStart', drawMix);
+  mix.on('recordStop', drawMix);
+
   // doooo ittttttt
   fetchMixData();
 
   // expose the mix Model so we can fuck with it in the console
   window.mix = mix;
+  window.drawMix = drawMix;
 
   // "instructions"
   console.log('play: mix.play()');

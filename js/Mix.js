@@ -85,6 +85,17 @@
           track._unmute();
         });
       }
+    },
+
+    createTrack: function(name){
+      this.tracks.add({
+        name: name, 
+        context: this.get('context'),
+        output: this.get('input'),
+        collection: this.tracks,
+        mix: this
+      });
+      return this.trigger('createTrack');
     }
     
   });
