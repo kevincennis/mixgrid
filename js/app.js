@@ -22,6 +22,7 @@
         name: trackData.name, 
         context: mix.get('context'),
         output: mix.get('input'),
+        collection: mix.tracks,
         mix: mix
       });
       mix.tracks.add(track);
