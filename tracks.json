@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Rhythm_1",
+    "regions": [
+      {
+        "url": "sound/gtr1.mp3", 
+        "start": 0, 
+        "startOffset": 4,
+        "stopOffset": 0
+      }
+    ]
+  },
+  {
+    "name": "Rhythm_2",
+    "regions": [
+      {
+        "url": "sound/gtr2.mp3", 
+        "start": 0, 
+        "startOffset": 4, 
+        "stopOffset": 0
+      }
+    ]
+  },
+  {
+    "name": "Lead",
+    "regions": [
+      {
+        "url": "sound/gtr3.mp3", 
+        "start": 12.35, 
+        "startOffset": 0.38, 
+        "stopOffset": 27
+      },
+      {
+        "url": "sound/gtr3.mp3", 
+        "start": 36.3, 
+        "startOffset": 24.3, 
+        "stopOffset": 1
+      }
+    ]
+  },
+  {
+    "name": "Octaves",
+    "regions": [
+      {
+        "url": "sound/gtr4.mp3", 
+        "start": 29.035, 
+        "startOffset": 1.1, 
+        "stopOffset": 1
+      }
+    ]
+  }
+]
