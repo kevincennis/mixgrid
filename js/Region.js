@@ -4,8 +4,8 @@
 
     // get things started
     initialize: function(){
-      // create a copy of the buffer that we can use for playback
-      this.sliceBuffer();
+      // clone the original buffer
+      this.setBuffer();
       // update start time when startOffset changes
       // and slice up a new buffer
       this.on('change:startOffset', function( evt, val ){
@@ -122,6 +122,26 @@
     // to mix position 0
     maxTime: function(){
       return this.get('start') + this.get('activeBuffer').duration;
+    },
+
+    // clone the Model's buffer on init
+    setBuffer: function( buffer ){
+      var buffer = buffer || this.get('buffer')
+        , channels = buffer.numberOfChannels
+        , sampleRate = buffer.sampleRate
+        , from = 0
+        , to = buffer.length
+        , len = to - from
+        , ab = this.get('context').createBuffer(channels, len, sampleRate)
+        , channel
+        , i = 0;
+      while ( i < channels ){
+        channel = buffer.getChannelData(i);
+        channel = channel.subarray(from, to);
+        ab.getChannelData(i++).set(channel);
+      }
+      this.set('buffer', ab);
+      return this.sliceBuffer();
     }
 
   });
