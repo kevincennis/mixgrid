@@ -119,6 +119,8 @@
     // returns the number of currently recording tracks
     getRecordingTracks: function(){
       return this.tracks.where({recording: true}).length;
+    },
+
     switchContext: function( ac ){
       this.set('context', ac);
       this.connect();
@@ -140,6 +142,17 @@
       this.switchContext(ac);
       return this;
     },
+
+    bounce: function(){
+      var ac, tape;
+      this.goOffline();
+      ac = this.get('context');
+      ac.oncomplete = function( ev ){
+        Archiver.save(ev.renderedBuffer, 'mix.wav');
+        this.goOnline();
+      }.bind(this);
+      mix.play();
+      ac.startRendering();
     }
     
   });
