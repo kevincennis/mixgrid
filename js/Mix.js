@@ -133,14 +133,13 @@
       maxtime = this.get('maxTime');
       sr = this.get('context').sampleRate;
       ac = new webkitOfflineAudioContext(2, maxtime * sr, sr);
-      this.switchContext(ac);
+      return this.switchContext(ac);
     },
 
     goOnline: function(){
       var ac = new webkitAudioContext();
       this.stop();
-      this.switchContext(ac);
-      return this;
+      return this.switchContext(ac);
     },
 
     bounce: function(){
@@ -153,6 +152,7 @@
       }.bind(this);
       mix.play();
       ac.startRendering();
+      return this;
     }
     
   });
