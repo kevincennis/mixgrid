@@ -12,14 +12,19 @@
 
     // get things started
     initialize: function(){
-      var ac = this.get('context');
       this.tracks = new TrackList;
       this.updatePosition();
-      this.set('input', ac.createGain());
-      this.get('input').connect(ac.destination);
+      this.connect();
       this.on('change:position', function(){
         this.get('playing') && this.play();
       });
+    },
+
+    connect: function(){
+      var ac = this.get('context');
+      this.set('input', ac.createGain());
+      this.get('input').connect(ac.destination);
+      this.tracks.connectAll();
     },
 
     // begin playback of all tracks
@@ -114,6 +119,27 @@
     // returns the number of currently recording tracks
     getRecordingTracks: function(){
       return this.tracks.where({recording: true}).length;
+    switchContext: function( ac ){
+      this.set('context', ac);
+      this.connect();
+      return this;
+    },
+
+    goOffline: function(){
+      var ac, maxtime, sr;
+      this.stop();
+      maxtime = this.get('maxTime');
+      sr = this.get('context').sampleRate;
+      ac = new webkitOfflineAudioContext(2, maxtime * sr, sr);
+      this.switchContext(ac);
+    },
+
+    goOnline: function(){
+      var ac = new webkitAudioContext();
+      this.stop();
+      this.switchContext(ac);
+      return this;
+    },
     }
     
   });

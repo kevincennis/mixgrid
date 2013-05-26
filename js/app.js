@@ -19,7 +19,6 @@
     tracks.forEach(function( trackData ){
       var track = new Track({
         name: trackData.name, 
-        context: mix.get('context'),
         output: mix.get('input'),
         collection: mix.tracks,
         mix: mix
@@ -42,7 +41,6 @@
       xhr.responseType = 'arraybuffer';
       xhr.addEventListener('load', function(){
         ac.decodeAudioData(xhr.response, function( buffer ){
-          regionData.context = track.get('context');
           regionData.buffer = buffer;
           regionData.output = track.get('input');
           regionData.mix = track.get('mix');

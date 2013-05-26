@@ -12,25 +12,37 @@
 
     // get things started
     initialize: function(){
-      var ac = this.get('context');
       this.regions = new RegionList;
-      this.set('input', ac.createGain());
-      this.set('mute', ac.createGain());
-      this.set('_mute', ac.createGain());
-      this.set('gain', ac.createGain());
-      this.get('mix').on('pause', function(){
-        this.get('recording') && this.recordStop();
-      }.bind(this));
       this.connect();
     },
 
     // connect all of our nodes
     connect: function(){
+      var ac = this.context();
+      this.set('input', ac.createGain());
+      this.set('mute', ac.createGain());
+      this.set('_mute', ac.createGain());
+      this.set('gain', ac.createGain());
       this.get('input').connect(this.get('mute'));
       this.get('mute').connect(this.get('_mute'));
       this.get('_mute').connect(this.get('gain'));
       this.get('gain').connect(this.get('output'));
+      this.get('mix').on('pause', function(){
+        this.get('recording') && this.recordStop();
+      }.bind(this));
+      this.regions.forEach(function( region ){
+        var src;
+        region.set('output', this.get('input'));
+        region.sliceBuffer();
+        region.createBufferSource();
+        src = region.get('src');
+        src.connect(this.get('input'));
+      }.bind(this));
       return this;
+    },
+
+    context: function(){
+      return this.get('mix').get('context');
     },
 
     // begin playback of all regions
@@ -87,7 +99,6 @@
 
     // solo the track
     solo: function(){
-      this.connect();
       this.unmute();
       this._unmute();
       this.set('soloed', true);
@@ -104,7 +115,7 @@
 
     // start recording
     record: function(){
-      var ac = this.get('context')
+      var ac = this.context()
         , mix = this.get('mix')
         , stream = mix.get('recStream')
         , src = ac.createMediaStreamSource(stream)
@@ -121,7 +132,7 @@
       });
       pro.onaudioprocess = function( evt ){
         var inp = evt.inputBuffer
-          , ac = this.get('context')
+          , ac = this.context()
           , ch = inp.getChannelData(0)
           , f32 = new Float32Array(ch.length)
           , recLength = this.get('recLength')
@@ -143,7 +154,7 @@
     },
 
     recordStop: function(){
-      var ac = this.get('context')
+      var ac = this.context()
         , arrBuffer = this.mergeRecBuffers()
         , audioBuffer = ac.createBuffer(1, arrBuffer.length, ac.sampleRate);
       audioBuffer.getChannelData(0).set(arrBuffer);
@@ -170,7 +181,6 @@
     createRegion: function( audioBuffer ){
       this.regions.add({
         buffer: audioBuffer,
-        context: this.get('context'),
         start: this.get('recordStart'),
         output: this.get('input'),
         mix: this.get('mix')

@@ -27,6 +27,13 @@
       return Math.max.apply(Math, this.map(function( track ){
         return track.maxTime();
       }));
+    },
+
+    connectAll: function(){
+      this.forEach(function( track ){
+        track.set('output', track.get('mix').get('input'));
+        track.connect();
+      });
     }
     
   });

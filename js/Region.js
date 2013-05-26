@@ -32,7 +32,7 @@
           , playing = mix.get('playing');
         playing && mix.play();
       });
-    },  
+    },
 
     // default values
     defaults: {
@@ -44,6 +44,10 @@
       stopOffset: 0,
       // are we currently playing?
       playing: false
+    },
+
+    context: function(){
+      return this.get('mix').get('context');
     },
     
     // convert samples to seconds
@@ -65,7 +69,7 @@
         , from = this.timeToSamples(this.get('startOffset'))
         , to = buffer.length - this.timeToSamples(this.get('stopOffset'))
         , len = to - from
-        , ab = this.get('context').createBuffer(channels, len, sampleRate)
+        , ab = this.context().createBuffer(channels, len, sampleRate)
         , channel
         , i = 0;
       while ( i < channels ){
@@ -80,7 +84,7 @@
     // so every time we play we need to make a new one
     // from `activeBuffer`
     createBufferSource: function(){
-      var src = this.get('context').createBufferSource();
+      var src = this.context().createBufferSource();
       if ( !this.get('activeBuffer') ) this.sliceBuffer();
       src.buffer = this.get('activeBuffer');
       src.connect(this.get('output'));
@@ -132,7 +136,7 @@
         , from = 0
         , to = buffer.length
         , len = to - from
-        , ab = this.get('context').createBuffer(channels, len, sampleRate)
+        , ab = this.context().createBuffer(channels, len, sampleRate)
         , channel
         , i = 0;
       while ( i < channels ){
