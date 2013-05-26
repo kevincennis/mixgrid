@@ -121,13 +121,17 @@
       });
       pro.onaudioprocess = function( evt ){
         var inp = evt.inputBuffer
+          , ac = this.get('context')
           , ch = inp.getChannelData(0)
           , f32 = new Float32Array(ch.length)
-          , recLength = this.get('recLength');
+          , recLength = this.get('recLength')
+          , buffer = ac.createBuffer(1, ch.length, ac.sampleRate);
         if ( this.get('recording') ){
           f32.set(ch);
+          buffer.getChannelData(0).set(f32);
           this.get('recBuffers').push(f32);
           this.set('recLength', recLength + f32.length);
+          this.trigger('stream', buffer);
         } else {
           pro.onaudioprocess = null;
           pro = null;
