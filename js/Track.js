@@ -109,7 +109,7 @@
         , stream = mix.get('recStream')
         , src = ac.createMediaStreamSource(stream)
         , channels = src.channelCount
-        , pro = ac.createScriptProcessor(4096, channels, 1);
+        , pro = ac.createScriptProcessor(2048, channels, 1);
       src.connect(pro);
       pro.connect(ac.destination);
       this.set('processor', pro);
