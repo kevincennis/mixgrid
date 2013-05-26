@@ -116,7 +116,7 @@
       this.set('recBuffers', []);
       this.set('recLength', 0);
       this.set('recording', true);
-      this.set('recordStart', mix.get('position'));
+      this.set('recordStart', mix.getPosition());
       pro.onaudioprocess = function( evt ){
         var inp = evt.inputBuffer
           , ch = inp.getChannelData(0)

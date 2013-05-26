@@ -56,16 +56,25 @@
       return this.get('context').currentTime;
     },
 
-    // update the current position of the scrubber bar (in seconds)
-    updatePosition: function(){
+    // get the exact playback position of the mix (in seconds)
+    getPosition: function(){
       var now = this.acTime()
         , playing = this.get('playing')
         , start = this.get('startTime')
         , position = this.get('position')
         , delta = now - start
         , recording = !!this.getRecordingTracks();
-      playing && this.set('position', delta, {silent: true});
-      playing && !recording && delta > this.get('maxTime') && this.rewind();
+      return playing ? delta : position;
+    },
+
+    // periodically update the position attribute
+    updatePosition: function(){
+      var position = this.getPosition()
+        , playing = this.get('playing')
+        , recording = this.get('recording')
+        , maxTime = this.get('maxTime');
+      this.set('position', position, {silent: true});
+      playing && !recording && position > maxTime && this.rewind();
       setTimeout(this.updatePosition.bind(this), 16);
     },
 
