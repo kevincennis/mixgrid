@@ -40,6 +40,9 @@
         src = region.get('src');
         src.connect(this.get('input'));
       }.bind(this));
+      if ( this.get('muted') ) this.mute();
+      if ( this.get('_muted') ) this._mute();
+      if ( this.get('soloed') ) this.solo();
       return this;
     },
 
@@ -70,20 +73,16 @@
 
     // mute the track (user-initiated)
     mute: function(){
-      if ( !this.get('muted') ){
-        this.get('mute').gain.value = 0;
-        this.set('muted', true);
-        this.get('soloed') && this.unsolo();
-      }
+      this.get('mute').gain.value = 0;
+      this.set('muted', true);
+      this.get('soloed') && this.unsolo();
       return this;
     },
 
     // unmute the track (user-initiated)
     unmute: function(){
-      if ( this.get('muted') ){
-        this.get('mute').gain.value = 1;
-        this.set('muted', false);
-      }
+      this.get('mute').gain.value = 1;
+      this.set('muted', false);
       return this;
     },
 
