@@ -112,11 +112,13 @@
         , pro = ac.createScriptProcessor(2048, channels, 1);
       src.connect(pro);
       pro.connect(ac.destination);
-      this.set('processor', pro);
-      this.set('recBuffers', []);
-      this.set('recLength', 0);
-      this.set('recording', true);
-      this.set('recordStart', mix.getPosition());
+      this.set({
+        processor: pro,
+        recBuffers: [],
+        recLength: 0,
+        recording: true,
+        recordStart: mix.getPosition()
+      });
       pro.onaudioprocess = function( evt ){
         var inp = evt.inputBuffer
           , ch = inp.getChannelData(0)
