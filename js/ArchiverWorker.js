@@ -19,11 +19,11 @@ function interleave(left, right){
 }
 
 // convert signed 32-bit floats to signed 16-bit integers
-function float32Toint16(output, offset, input){
+function float32Toint16(view, offset, input){
   var i = 0, len = input.length, sample;
   for ( ; i < len; i++, offset += 2 ){
     sample = input[i] < -1 ? -1 : input[i] > 1 ? 1 : input[i];
-    output.setInt16(offset, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
+    view.setInt16(offset, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
   }
 }
 
