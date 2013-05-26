@@ -58,7 +58,7 @@ function encode(samples, sampleRate){
   stringToUint8(dataView, 8, 'WAVE');
   // Subchunk1 ID (big-endian)
   stringToUint8(dataView, 12, 'fmt ');
-  // Subchunk1 Size (big-endian)
+  // Subchunk1 Size (little-endian)
   dataView.setUint32(16, 16, true);
   // Audio Format (little-endian)
   dataView.setInt16(20, 1, true);
