@@ -71,7 +71,7 @@
     updatePosition: function(){
       var position = this.getPosition()
         , playing = this.get('playing')
-        , recording = this.get('recording')
+        , recording = !!this.getRecordingTracks()
         , maxTime = this.get('maxTime');
       this.set('position', position, {silent: true});
       playing && !recording && position > maxTime && this.rewind();
