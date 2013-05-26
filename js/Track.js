@@ -19,10 +19,12 @@
     // connect all of our nodes
     connect: function(){
       var ac = this.context();
-      this.set('input', ac.createGain());
-      this.set('mute', ac.createGain());
-      this.set('_mute', ac.createGain());
-      this.set('gain', ac.createGain());
+      this.set({
+        input: ac.createGain(),
+        mute: ac.createGain(),
+        _mute: ac.createGain(),
+        gain: ac.createGain()
+      });
       this.get('input').connect(this.get('mute'));
       this.get('mute').connect(this.get('_mute'));
       this.get('_mute').connect(this.get('gain'));
