@@ -21,7 +21,9 @@
     },
 
     connect: function(){
-      var ac = this.get('context');
+      var ac = this.get('context')
+        , click = new Metronome(ac);
+      this.set('click', click);
       this.set('input', ac.createGain());
       this.get('input').connect(ac.destination);
       this.tracks.connectAll();
@@ -31,18 +33,23 @@
     play: function(){
       var now = this.acTime()
         , start = this.get('startTime')
+        , clicking = this.get('clicking')
         , position = this.get('position');
       this.set('startTime', now - position);
       this.set('maxTime', this.tracks.maxTime());
       this.tracks.play(now, position);
       this.trigger('play');
+      clicking && this.startClick();
       return this.set('playing', true);
     },
 
     // pause all tracks
     pause: function(){
+      var clicking = this.get('clicking');
       this.tracks.pause();
       this.trigger('pause');
+      this.stopClick();
+      this.set('clicking', clicking);
       return this.set('playing', false);
     },
 
@@ -153,6 +160,21 @@
       mix.play();
       ac.startRendering();
       return this;
+    },
+
+    startClick: function(){
+      var click = this.get('click')
+        , pos = this.getPosition()
+        , bpm = this.get('bpm');
+      this.set('clicking', true);
+      click.stop();
+      click.setBpm(bpm);
+      click.start(pos);
+    },
+
+    stopClick: function(){
+      this.set('clicking', false);
+      this.get('click').stop();
     }
     
   });
