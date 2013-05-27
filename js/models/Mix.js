@@ -5,7 +5,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       position: 0,
       startTime: 0,
       playing: false,
-      maxTime: Infinity
+      maxTime: Infinity,
+      inputEnabled: false
     },
 
     // get things started
@@ -178,6 +179,16 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     stopClick: function(){
       this.set('clicking', false);
       this.get('click').stop();
+    },
+
+    requestInput: function(){
+      navigator.webkitGetUserMedia({audio: true}, function(stream){
+        mix.set('inputEnabled', true);
+        mix.set('recStream', stream);
+      }.bind(this), function(){
+        console.log('couldn\'t get a stream');
+      });
     }
+
   });
 });

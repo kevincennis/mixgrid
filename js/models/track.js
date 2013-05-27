@@ -122,9 +122,14 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       var ac = this.context()
         , mix = this.get('mix')
         , stream = mix.get('recStream')
-        , src = ac.createMediaStreamSource(stream)
-        , channels = src.channelCount
-        , pro = ac.createScriptProcessor(2048, channels, 1);
+        , src , channels, pro;
+      // no mic input? ask nicely
+      if ( !mix.get('inputEnabled') || !stream ) {
+        return mix.requestInput();
+      }
+      src = ac.createMediaStreamSource(stream)
+      channels = src.channelCount
+      pro = ac.createScriptProcessor(2048, channels, 1);
       src.connect(pro);
       pro.connect(ac.destination);
       this.set({

@@ -4,7 +4,10 @@ App.on("start", function(options) {
   var mixURL = options.mixURL
     , ac = new webkitAudioContext()
     , mix = new App.Models.Mix({context: ac, bpm: options.bpm})
-    , downloader = new Downloader(getInput);
+    , downloader = new Downloader(function(){
+        drawMix();
+        mix.play();
+      });
 
   // grab some JSON
   function fetchMixData(){
@@ -78,18 +81,6 @@ App.on("start", function(options) {
     }
     $scrubber.css('left', left * pps);
     requestAnimationFrame(drawScrubber)
-  }
-
-  function getInput(){
-    navigator.webkitGetUserMedia({audio: true}, function(stream){
-      mix.set('recStream', stream);
-      setTimeout(function(){
-        drawMix();
-        mix.play();
-      }, 100);
-    }, function(){
-
-    });
   }
 
   mix.on('createTrack', drawMix);
