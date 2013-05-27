@@ -7,13 +7,17 @@
       muted: false,
       _muted: false,
       soloed: false,
-      recording: false
+      recording: false,
+      volume: 0.5
     },
 
     // get things started
     initialize: function(){
       this.regions = new RegionList;
       this.connect();
+      this.on('change:volume', function(){
+        this.get('gain').gain.value = this.get('volume');
+      });
     },
 
     // connect all of our nodes
@@ -43,6 +47,7 @@
       if ( this.get('muted') ) this.mute();
       if ( this.get('_muted') ) this._mute();
       if ( this.get('soloed') ) this.solo();
+      this.get('gain').gain.value = this.get('volume');
       return this;
     },
 

@@ -17,6 +17,7 @@ $(function(){
     tracks.forEach(function( trackData ){
       var track = new Track({
         name: trackData.name, 
+        volume: trackData.volume,
         output: mix.get('input'),
         collection: mix.tracks,
         mix: mix
