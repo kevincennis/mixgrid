@@ -22,7 +22,7 @@
     this.src.buffer = this.audioBuffer;
     this.src.loop = true;
     this.src.connect(this.ac.destination);
-    start = beatLength - ( offset ? offset % beatLength : 0 );
+    start = offset == 0 ? 0 : beatLength - ( offset ? offset % beatLength : 0 );
     this.src.start( this.ac.currentTime + start );
   };
 
