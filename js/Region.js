@@ -25,6 +25,20 @@
         this.sliceBuffer();
         playing && mix.play();
       });
+      // slice up a new buffer when fadeIn changes
+      this.on('change:fadeIn', function( evt, val ){
+        var mix = this.get('mix')
+          , playing = mix.get('playing');
+        this.sliceBuffer();
+        playing && mix.play();
+      });
+      // slice up a new buffer when fadeOut changes
+      this.on('change:fadeOut', function( evt, val ){
+        var mix = this.get('mix')
+          , playing = mix.get('playing');
+        this.sliceBuffer();
+        playing && mix.play();
+      });
       // call mix.play() after changing start time so that
       // everything important gets recalculated
       this.on('change:start', function( evt, val ){
@@ -43,7 +57,11 @@
       // compared to the original buffer, where does the region stop?
       stopOffset: 0,
       // are we currently playing?
-      playing: false
+      playing: false, 
+      // fadeIn duration
+      fadeIn: 0,
+      // fadeOut duration
+      fadeOut: 0
     },
 
     context: function(){
@@ -75,9 +93,27 @@
       while ( i < channels ){
         channel = buffer.getChannelData(i);
         channel = channel.subarray(from, to);
-        ab.getChannelData(i++).set(channel);
+        ab.getChannelData(i++).set(this.applyFades(channel));
       }
       return this.set('activeBuffer', ab);
+    },
+
+    // apply fades directly to the active buffer. yes, that seems crazy.
+    // but it's actually easier to manage than linearRampToValueAtTime
+    applyFades: function( arrayBuffer ){
+      var fadeIn = this.timeToSamples(this.get('fadeIn'))
+        , fadeOut = this.timeToSamples(this.get('fadeOut'))
+        , f32 = new Float32Array(arrayBuffer.length)
+        , end = f32.length - 1
+        , i = o = 0;
+      f32.set(arrayBuffer);
+      // fade in
+      while ( i < fadeIn && i < f32.length )
+        f32[i] = f32[i] * ( i++ / fadeIn );
+      // fade out
+      while ( o < fadeOut && o < end )
+        f32[end - o] = f32[end - o] * ( o++ / fadeOut );
+      return f32;
     },
 
     // AudioBufferSource nodes are single-use only,

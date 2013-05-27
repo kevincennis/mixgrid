@@ -7,7 +7,9 @@
         "url": "sound/rhythm_left.mp3", 
         "start": 0, 
         "startOffset": 0,
-        "stopOffset": 0
+        "stopOffset": 0,
+        "fadeIn": 0,
+        "fadeOut": 3
       }
     ]
   },
@@ -19,7 +21,9 @@
         "url": "sound/rhythm_right.mp3", 
         "start": 0, 
         "startOffset": 0, 
-        "stopOffset": 0
+        "stopOffset": 0,
+        "fadeIn": 0,
+        "fadeOut": 3
       }
     ]
   },
@@ -31,13 +35,17 @@
         "url": "sound/lead_1.mp3", 
         "start": 13.95, 
         "startOffset": 0, 
-        "stopOffset": 37
+        "stopOffset": 37,
+        "fadeIn": 0,
+        "fadeOut": 2
       },
       {
         "url": "sound/lead_2.mp3", 
         "start": 36.55, 
         "startOffset": 0, 
-        "stopOffset": 37
+        "stopOffset": 37,
+        "fadeIn": 0,
+        "fadeOut": 4
       }
     ]
   },
@@ -49,7 +57,9 @@
         "url": "sound/octaves_left.mp3", 
         "start": 29.49, 
         "startOffset": 0, 
-        "stopOffset": 42
+        "stopOffset": 42,
+        "fadeIn": 0,
+        "fadeOut": 1.5
       }
     ]
   },
@@ -61,7 +71,9 @@
         "url": "sound/octaves_right.mp3", 
         "start": 29.49, 
         "startOffset": 0, 
-        "stopOffset": 42
+        "stopOffset": 42,
+        "fadeIn": 0,
+        "fadeOut": 1.5
       }
     ]
   },
@@ -73,7 +85,9 @@
         "url": "sound/handclaps.mp3", 
         "start": 14.09, 
         "startOffset": 0, 
-        "stopOffset": 16
+        "stopOffset": 16,
+        "fadeIn": 0,
+        "fadeOut": 0
       }
     ]
   }
