@@ -1,8 +1,9 @@
-$(function(){
+App = new Backbone.Marionette.Application();
 
-  var mixURL = 'tracks.json'
+App.on("start", function(options) {
+  var mixURL = options.mixURL
     , ac = new webkitAudioContext()
-    , mix = new Mix({context: ac, bpm: 85})
+    , mix = new App.Models.Mix({context: ac, bpm: options.bpm})
     , downloader = new Downloader(getInput);
 
   // grab some JSON
@@ -16,7 +17,7 @@ $(function(){
   function createTracks( tracks ){
     tracks.forEach(function( trackData ){
       var track = new Track({
-        name: trackData.name, 
+        name: trackData.name,
         volume: trackData.volume,
         output: mix.get('input'),
         collection: mix.tracks,
@@ -47,7 +48,7 @@ $(function(){
     });
   }
 
-  // quick and dirty track layout so i can 
+  // quick and dirty track layout so i can
   // see what the fuck i'm doing
   function drawMix(){
     var pps = 20;

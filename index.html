@@ -8,16 +8,22 @@
     <script src="js/vendor/jquery-1.9.1.js"></script>
     <script src="js/vendor/underscore.js"></script>
     <script src="js/vendor/backbone.js"></script>
+    <script src="js/vendor/marionette.1.0.3.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/vendor/tuna.js"></script>
     <script src="js/Metronome.js"></script>
     <script src="js/Region.js"></script>
     <script src="js/RegionList.js"></script>
     <script src="js/Track.js"></script>
     <script src="js/TrackList.js"></script>
-    <script src="js/Mix.js"></script>
+    <script src="js/models/mix.js"></script>
     <script src="js/Archiver.js"></script>
-    <script src="js/Mix.js"></script>
     <script src="js/Downloader.js"></script>
-    <script src="js/app.js"></script>
+    <script>
+    $().ready(App.start({
+        bpm: 85,
+        mixURL: 'tracks.json'
+    }));
+    </script>
   </body>
 </html>
