@@ -82,8 +82,10 @@ $(function(){
   function getInput(){
     navigator.webkitGetUserMedia({audio: true}, function(stream){
       mix.set('recStream', stream);
-      drawMix();
-      mix.play();
+      setTimeout(function(){
+        drawMix();
+        mix.play();
+      }, 100);
     }, function(){
 
     });
