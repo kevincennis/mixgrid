@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Raw Converter</title>
+    <style>
+        body {
+          font-family: Helvetica;
+          color: #333;
+          padding: 50px;
+        }
+        h1, h2, h3, h4 {
+          text-align: center;
+          margin: 30px auto;
+        }
+        #target {
+          width: 600px;
+          height: 150px;
+          margin: 0 auto;
+          background: #eee;
+          line-height: 150px;
+          text-align: center;
+          font-size: 30px;
+          font-weight: bold;
+          text-shadow: 0 1px 0 white;
+        }
+        #target.over {
+          background: #ddd;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>convert .mp3 or .wav to .mixlair</h1>
+    <h4>raw LPCM as signed 32-bit floats with a nominal range of -1 to 1</h4>
+    <p id="target">Drag a wav or mp3 here</p>
+    <script>
+      var target = document.getElementById('target')
+
+      target.addEventListener('dragenter', handler, false)
+      target.addEventListener('dragleave', handler, false)
+      target.addEventListener('dragover', handler, false)
+      target.addEventListener('drop', handler, false)
+
+      function handler( ev ){
+        ev.preventDefault();
+        switch( ev.type ){
+          case 'dragenter':
+            target.className = 'over'
+            target.innerHTML = 'Drop it!'
+            break
+          case 'dragover':
+            break
+          case 'dragleave':
+            target.className = ''
+            target.innerHTML = 'Drag a wav or mp3 here'
+            break
+          case 'drop':
+            target.className = ''
+            target.innerHTML = 'Decoding & Processing...'
+            drop(ev.dataTransfer.files)
+            break
+        }
+        return false
+      }
+
+      function drop( files ){
+        var ac = new webkitAudioContext()
+          , reader = new FileReader()
+        reader.readAsArrayBuffer( files[0] )
+        reader.addEventListener('load', function( ev ){
+          ac.decodeAudioData(ev.target.result, function( buffer ){
+            var name = files[0].name.replace(/\..+$/, '')
+              , duration = buffer.duration
+            render(buffer, name);
+          })
+        }, false)
+      }
+
+      function render( buffer, name ){
+        var ac = new webkitOfflineAudioContext(1, buffer.length, 44100)
+          , src = ac.createBufferSource()
+        src.buffer = buffer
+        src.connect(ac.destination)
+        ac.oncomplete = function( ev ){
+          var blob = new Blob([ev.renderedBuffer.getChannelData(0)])
+            , url = (window.URL || window.webkitURL).createObjectURL(blob)
+            , link = window.document.createElement('a')
+            , click = document.createEvent('Event')
+          link.href = url
+          link.download = name + '.mixlair'
+          click.initEvent('click', true, true)
+          link.dispatchEvent(click)
+          target.innerHTML = 'Drag a wav or mp3 here'
+        }
+        src.start(0)
+        ac.startRendering()
+      }
+    </script>
+  </body>
+</html>
