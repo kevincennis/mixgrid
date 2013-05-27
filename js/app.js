@@ -1,21 +1,19 @@
-(function(){
+$(function(){
 
-  var ac = new webkitAudioContext()
-    , mix = new Mix({context: ac})
-    , mixURL = 'tracks.json';
+  var mixURL = 'tracks.json'
+    , ac = new webkitAudioContext()
+    , mix = new Mix({context: ac, bpm: 85})
+    , downloader = new Downloader(getInput);
 
   // grab some JSON
   function fetchMixData(){
     $.getJSON(mixURL, function( data ){
-      createTracks( data, function(){
-        getInput();
-      });
+      createTracks(data);
     });
   }
 
   // create our tracks and add them to the mix
-  function createTracks( tracks, callback ){
-    var loaded = 0;
+  function createTracks( tracks ){
     tracks.forEach(function( trackData ){
       var track = new Track({
         name: trackData.name, 
@@ -24,32 +22,27 @@
         mix: mix
       });
       mix.tracks.add(track);
-      createRegions( track, trackData.regions, function(){
-        loaded++;
-        if ( loaded == tracks.length ) callback();
-      });
+      createRegions(track, trackData.regions);
     });
   }
 
   // create our regions and add them to a track
-  function createRegions( track, regions, callback ){
-    var loaded = 0;
+  function createRegions( track, regions ){
     if ( !regions.length ) callback();
     regions.forEach(function( regionData ){
-      var xhr = new XMLHttpRequest();
+      var callback, xhr = new XMLHttpRequest();
       xhr.open('GET', regionData.url, true);
       xhr.responseType = 'arraybuffer';
-      xhr.addEventListener('load', function(){
+      callback = function( downloaderCallback ){
         ac.decodeAudioData(xhr.response, function( buffer ){
           regionData.buffer = buffer;
           regionData.output = track.get('input');
           regionData.mix = track.get('mix');
           track.regions.add(regionData);
-          loaded++;
-          if ( loaded == regions.length ) callback();
+          downloaderCallback();
         });
-      }, false);
-      xhr.send();
+      }
+      downloader.add(xhr, callback, true);
     });
   }
 
@@ -105,6 +98,7 @@
   // expose the mix Model so we can fuck with it in the console
   window.mix = mix;
   window.drawMix = drawMix;
+  window.downloader = downloader;
 
   // "instructions"
   console.log('play: mix.play()');
@@ -116,4 +110,4 @@
   console.log('slice right: mix.tracks.findWhere({name: \'Rhythm_1\'}).regions.models[0].set(\'stopOffset\', 20)');
   console.log('start position: mix.tracks.findWhere({name: \'Rhythm_1\'}).regions.models[0].set(\'start\', 10)');
 
-}());
+});
