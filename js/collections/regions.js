@@ -1,11 +1,8 @@
-(function(){
-
-  var RegionList = Backbone.Collection.extend({
-
-    model: Region,
-
+App.module("Collections", function(Collections, App, Backbone, Marionette, $, _) {
+  Collections.Regions = Backbone.Collection.extend({
+    model: App.Models.Region,
     // begin playback of all regions
-    // 
+    //
     // @param {Number} now [schedule time... usually AudioContext.currentTime]
     // @param {Number} mixOffset [mix playback position]
     play: function( now, offset ){
@@ -21,16 +18,12 @@
       });
     },
 
-    // offset (in seconds) of the last playable audio, in relation 
+    // offset (in seconds) of the last playable audio, in relation
     // to mix position 0
     maxTime: function(){
       return Math.max.apply(Math, this.map(function( region ){
         return region.maxTime();
       }));
     }
-
   });
-
-  window.RegionList = RegionList;
-
-}());
+});

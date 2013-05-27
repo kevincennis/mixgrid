@@ -10,7 +10,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     // get things started
     initialize: function(){
-      this.tracks = new TrackList;
+      this.tracks = new App.Collections.Tracks;
       this.updatePosition();
       this.connect();
       this.on('change:position', function(){

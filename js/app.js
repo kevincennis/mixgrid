@@ -16,7 +16,7 @@ App.on("start", function(options) {
   // create our tracks and add them to the mix
   function createTracks( tracks ){
     tracks.forEach(function( trackData ){
-      var track = new Track({
+      var track = new App.Models.Track({
         name: trackData.name,
         volume: trackData.volume,
         output: mix.get('input'),

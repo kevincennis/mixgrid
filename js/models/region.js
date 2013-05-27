@@ -1,6 +1,5 @@
-(function(){
-
-  var Region = Backbone.Model.extend({
+App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
+  Models.Region = Backbone.Model.extend({
 
     // get things started
     initialize: function(){
@@ -57,7 +56,7 @@
       // compared to the original buffer, where does the region stop?
       stopOffset: 0,
       // are we currently playing?
-      playing: false, 
+      playing: false,
       // fadeIn duration
       fadeIn: 0,
       // fadeOut duration
@@ -67,12 +66,12 @@
     context: function(){
       return this.get('mix').get('context');
     },
-    
+
     // convert samples to seconds
     samplesToTime: function( samples ){
       return samples / this.get('buffer').sampleRate;
     },
-    
+
     // convert seconds to samples
     timeToSamples: function( time ){
       return time * this.get('buffer').sampleRate;
@@ -129,7 +128,7 @@
     },
 
     // begin playback of the region
-    // 
+    //
     // @param {Number} now [schedule time... usually AudioContext.currentTime]
     // @param {Number} mixOffset [mix playback position]
     play: function( now, mixOffset ){
@@ -158,7 +157,7 @@
       return this;
     },
 
-    // offset (in seconds) of the last playable audio, in relation 
+    // offset (in seconds) of the last playable audio, in relation
     // to mix position 0
     maxTime: function(){
       return this.get('start') + this.get('activeBuffer').duration;
@@ -185,7 +184,4 @@
     }
 
   });
-
-  window.Region = Region;
-
-}());
+});

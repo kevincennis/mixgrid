@@ -1,7 +1,5 @@
-(function(){
-
-  var Track = Backbone.Model.extend({
-
+App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
+  Models.Track = Backbone.Model.extend({
     // default params
     defaults: {
       muted: false,
@@ -13,7 +11,7 @@
 
     // get things started
     initialize: function(){
-      this.regions = new RegionList;
+      this.regions = new App.Collections.Regions;
       this.connect();
       this.on('change:volume', function(){
         this.get('gain').gain.value = this.get('volume');
@@ -56,7 +54,7 @@
     },
 
     // begin playback of all regions
-    // 
+    //
     // @param {Number} now [schedule time... usually AudioContext.currentTime]
     // @param {Number} mixOffset [mix playback position]
     play: function( now, offset ){
@@ -70,7 +68,7 @@
       return this;
     },
 
-    // offset (in seconds) of the last playable audio, in relation 
+    // offset (in seconds) of the last playable audio, in relation
     // to mix position 0
     maxTime: function(){
       return this.regions.maxTime();
@@ -192,9 +190,7 @@
         mix: this.get('mix')
       });
     }
-    
+
   });
 
-  window.Track = Track;
-
-}());
+});
