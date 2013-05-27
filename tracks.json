@@ -43,9 +43,9 @@
         "url": "sound/lead_2.mp3", 
         "start": 36.55, 
         "startOffset": 0, 
-        "stopOffset": 37,
+        "stopOffset": 39,
         "fadeIn": 0,
-        "fadeOut": 4
+        "fadeOut": 2
       }
     ]
   },
@@ -85,9 +85,9 @@
         "url": "sound/handclaps.mp3", 
         "start": 14.09, 
         "startOffset": 0, 
-        "stopOffset": 16,
+        "stopOffset": 17,
         "fadeIn": 0,
-        "fadeOut": 0
+        "fadeOut": 1
       }
     ]
   }
