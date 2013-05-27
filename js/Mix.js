@@ -150,10 +150,15 @@
     },
 
     bounce: function(){
-      var ac, tape;
+      var count = this.tracks.length
+        , start = Date.now()
+        , tape
+        , ac;
       this.goOffline();
       ac = this.get('context');
+      console.log('rendering ' + count + ' tracks.');
       ac.oncomplete = function( ev ){
+        console.log('render time: ' + ( Date.now() - start ) + ' ms.');
         Archiver.save(ev.renderedBuffer, 'mix.wav');
         this.goOnline();
       }.bind(this);

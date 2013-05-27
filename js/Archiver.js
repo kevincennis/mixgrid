@@ -3,8 +3,14 @@
   var Archiver = {
     path: '/js/ArchiverWorker.js',
     save: function( audioBuffer, filename ){
-      var worker = new Worker(this.path);
+      var duration = audioBuffer.duration.toFixed(3)
+        , worker = new Worker(this.path)
+        , start = Date.now();
+      console.log('encoding PCM to WAV.');
+      console.log('buffer length: ' + duration + ' seconds.');
       worker.onmessage = function( ev ){
+        var end = Date.now();
+        console.log('WAV encoded in ' + (end - start) + ' ms.')
         this.forceDownload(ev.data, filename);
       }.bind(this);
       worker.postMessage({
