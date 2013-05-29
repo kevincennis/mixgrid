@@ -6,7 +6,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       _muted: false,
       soloed: false,
       recording: false,
-      volume: 0.5
+      volume: 0.5,
+      peak: -192
     },
 
     // get things started
@@ -20,19 +21,25 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     // connect all of our nodes
     connect: function(){
-      var ac = this.context();
+      var ac = this.context()
+        , meter = new Meter(ac);
       this.set({
         input: ac.createGain(),
         mute: ac.createGain(),
         _mute: ac.createGain(),
-        gain: ac.createGain()
+        gain: ac.createGain(),
+        meter: meter
       });
       this.get('input').connect(this.get('mute'));
       this.get('mute').connect(this.get('_mute'));
       this.get('_mute').connect(this.get('gain'));
+      this.get('gain').connect(this.get('meter').input);
       this.get('gain').connect(this.get('output'));
       this.get('mix').on('pause', function(){
         this.get('recording') && this.recordStop();
+      }.bind(this));
+      this.get('meter').onPeak(function( peak ){
+        this.set('peak', peak);
       }.bind(this));
       this.regions.forEach(function( region ){
         var src;

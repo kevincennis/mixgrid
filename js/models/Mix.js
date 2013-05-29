@@ -6,7 +6,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       startTime: 0,
       playing: false,
       maxTime: Infinity,
-      inputEnabled: false
+      inputEnabled: false,
+      peak: -192
     },
 
     // get things started
@@ -21,10 +22,16 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
 
     connect: function(){
       var ac = this.get('context')
-        , click = new Metronome(ac);
+        , click = new Metronome(ac)
+        , meter = new Meter(ac);
       this.set('click', click);
       this.set('input', ac.createGain());
+      this.set('meter', meter);
       this.get('input').connect(ac.destination);
+      this.get('input').connect(this.get('meter').input);
+      this.get('meter').onPeak(function( peak ){
+        this.set('peak', peak);
+      }.bind(this));
       this.tracks.connectAll();
     },
 
