@@ -127,10 +127,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       return this;
     },
 
-    // begin playback of the region
-    //
-    // @param {Number} now [schedule time... usually AudioContext.currentTime]
-    // @param {Number} mixOffset [mix playback position]
+    // begin playback of the region at the current mix position
     play: function(){
       var mix, now, mixOffset, regionStart, playbackStart, offset, duration;
       // just in case
