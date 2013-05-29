@@ -30,7 +30,7 @@
 
   // register callbacks that get passed a dBFS value
   // when onaudioprocess fires
-  Meter.prototype.onPeak = function( callback ){
+  Meter.prototype.ondBFS = function( callback ){
     this.callbacks.push( callback );
   }
 
