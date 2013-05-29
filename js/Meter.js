@@ -4,7 +4,7 @@
 
   var Meter = function( ac ){
     this.ac = ac;
-    this.input = ac.createScriptProcessor(4096, 1, 1)
+    this.input = ac.createScriptProcessor(512, 1, 1)
     this.input.connect(ac.destination);
     this.input.onaudioprocess = this.getdBFS.bind(this);
     this.callbacks = [];
