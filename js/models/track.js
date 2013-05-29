@@ -7,7 +7,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       soloed: false,
       recording: false,
       volume: 0.5,
-      peak: -192
+      dBFS: -192
     },
 
     // get things started
@@ -38,8 +38,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.get('mix').on('pause', function(){
         this.get('recording') && this.recordStop();
       }.bind(this));
-      this.get('meter').onPeak(function( peak ){
-        this.set('peak', peak);
+      this.get('meter').ondBFS(function( dBFS ){
+        this.set('dBFS', dBFS);
       }.bind(this));
       this.regions.forEach(function( region ){
         var src;
