@@ -131,12 +131,16 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     //
     // @param {Number} now [schedule time... usually AudioContext.currentTime]
     // @param {Number} mixOffset [mix playback position]
-    play: function( now, mixOffset ){
-      var now, regionStart, playbackStart, offset, duration;
+    play: function(){
+      var mix, now, mixOffset, regionStart, playbackStart, offset, duration;
       // just in case
       this.pause();
       // create a new bufferSource
       this.createBufferSource();
+      // get timing info
+      mix = this.get('mix');
+      now = mix.acTime();
+      mixOffset = mix.getPosition();
       // calculate start time, offset, and duration
       regionStart = this.get('start');
       playbackStart = Math.max(0, regionStart - mixOffset);

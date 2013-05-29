@@ -31,12 +31,11 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
     // begin playback of all tracks
     play: function(){
       var now = this.acTime()
-        , start = this.get('startTime')
         , clicking = this.get('clicking')
         , position = this.get('position');
       this.set('startTime', now - position);
       this.set('maxTime', this.tracks.maxTime());
-      this.tracks.play(now, position);
+      this.tracks.play();
       this.trigger('play');
       clicking && this.startClick();
       return this.set('playing', true);

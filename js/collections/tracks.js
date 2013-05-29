@@ -3,12 +3,9 @@ App.module("Collections", function(Collections, App, Backbone, Marionette, $, _)
     model: App.Track,
 
     // begin playback of all tracks
-    //
-    // @param {Number} now [schedule time... usually AudioContext.currentTime]
-    // @param {Number} mixOffset [mix playback position]
-    play: function(now, offset){
+    play: function(){
       return this.forEach(function(track){
-        track.play(now, offset);
+        track.play();
       });
     },
 
