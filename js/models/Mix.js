@@ -7,7 +7,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       playing: false,
       maxTime: Infinity,
       inputEnabled: false,
-      peak: -192
+      dBFS: -192
     },
 
     // get things started
@@ -29,8 +29,8 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       this.set('meter', meter);
       this.get('input').connect(ac.destination);
       this.get('input').connect(this.get('meter').input);
-      this.get('meter').onPeak(function( peak ){
-        this.set('peak', peak);
+      this.get('meter').ondBFS(function( dBFS ){
+        this.set('peak', dBFS);
       }.bind(this));
       this.tracks.connectAll();
     },
