@@ -1,0 +1,361 @@
+{
+  "bpm": 85,
+  "tracks": [
+    {
+      "name": "Rhythm_1",
+      "muted": false,
+      "_muted": false,
+      "soloed": false,
+      "volume": 0.75,
+      "pluginParams": {
+        "compressor": {
+          "bypass": 0,
+          "threshold": -12,
+          "release": 250,
+          "makeupGain": 1,
+          "attack": 1,
+          "ratio": 4,
+          "knee": 5,
+          "automakeup": false
+        },
+        "chorus": {
+          "bypass": 1,
+          "feedback": 0.4,
+          "delay": 0.0045,
+          "depth": 0.7,
+          "rate": 1.5
+        },
+        "tremolo": {
+          "bypass": 1,
+          "intensity": 0.3,
+          "stereoPhase": 0,
+          "rate": 5
+        },
+        "delay": {
+          "bypass": 1,
+          "delayTime": 100,
+          "feedback": 0.45,
+          "cutoff": 20000,
+          "wetLevel": 0.5,
+          "dryLevel": 1
+        },
+        "reverb": {
+          "bypass": 1,
+          "highCut": 22050,
+          "lowCut": 20,
+          "dryLevel": 1,
+          "wetLevel": 1,
+          "impulse": "impulses\/plate.wav"
+        }
+      },
+      "regions": [
+        {
+          "url": "sound\/rhythm_left.mp3",
+          "start": 0,
+          "startOffset": 0,
+          "stopOffset": 0,
+          "fadeIn": 0,
+          "fadeOut": 3
+        }
+      ]
+    },
+    {
+      "name": "Rhythm_2",
+      "muted": false,
+      "_muted": false,
+      "soloed": false,
+      "volume": 0.65,
+      "pluginParams": {
+        "compressor": {
+          "bypass": 0,
+          "threshold": -12,
+          "release": 250,
+          "makeupGain": 1,
+          "attack": 1,
+          "ratio": 4,
+          "knee": 5,
+          "automakeup": false
+        },
+        "chorus": {
+          "bypass": 1,
+          "feedback": 0.4,
+          "delay": 0.0045,
+          "depth": 0.7,
+          "rate": 1.5
+        },
+        "tremolo": {
+          "bypass": 1,
+          "intensity": 0.3,
+          "stereoPhase": 0,
+          "rate": 5
+        },
+        "delay": {
+          "bypass": 1,
+          "delayTime": 100,
+          "feedback": 0.45,
+          "cutoff": 20000,
+          "wetLevel": 0.5,
+          "dryLevel": 1
+        },
+        "reverb": {
+          "bypass": 1,
+          "highCut": 22050,
+          "lowCut": 20,
+          "dryLevel": 1,
+          "wetLevel": 1,
+          "impulse": "impulses\/plate.wav"
+        }
+      },
+      "regions": [
+        {
+          "url": "sound\/rhythm_right.mp3",
+          "start": 0,
+          "startOffset": 0,
+          "stopOffset": 0,
+          "fadeIn": 1,
+          "fadeOut": 3
+        }
+      ]
+    },
+    {
+      "name": "Lead",
+      "muted": false,
+      "_muted": false,
+      "soloed": false,
+      "volume": 0.29,
+      "pluginParams": {
+        "compressor": {
+          "bypass": 0,
+          "threshold": -12,
+          "release": 250,
+          "makeupGain": 4,
+          "attack": 1,
+          "ratio": 4,
+          "knee": 5,
+          "automakeup": false
+        },
+        "chorus": {
+          "bypass": 1,
+          "feedback": 0.4,
+          "delay": 0.0045,
+          "depth": 0.7,
+          "rate": 1.5
+        },
+        "tremolo": {
+          "bypass": 1,
+          "intensity": 0.3,
+          "stereoPhase": 0,
+          "rate": 5
+        },
+        "delay": {
+          "bypass": 0,
+          "delayTime": 150,
+          "feedback": 0.45,
+          "cutoff": 20000,
+          "wetLevel": 0.5,
+          "dryLevel": 1
+        },
+        "reverb": {
+          "bypass": 0,
+          "highCut": 22050,
+          "lowCut": 20,
+          "dryLevel": 1,
+          "wetLevel": 0.5,
+          "impulse": "impulses\/plate.wav"
+        }
+      },
+      "regions": [
+        {
+          "url": "sound\/lead_1.mp3",
+          "start": 13.95,
+          "startOffset": 0,
+          "stopOffset": 37,
+          "fadeIn": 0,
+          "fadeOut": 2
+        },
+        {
+          "url": "sound\/lead_2.mp3",
+          "start": 36.55,
+          "startOffset": 0,
+          "stopOffset": 39,
+          "fadeIn": 0,
+          "fadeOut": 2
+        }
+      ]
+    },
+    {
+      "name": "Octaves_Left",
+      "muted": false,
+      "_muted": false,
+      "soloed": false,
+      "volume": 0.45,
+      "pluginParams": {
+        "compressor": {
+          "bypass": 1,
+          "threshold": -20,
+          "release": 250,
+          "makeupGain": 1,
+          "attack": 1,
+          "ratio": 4,
+          "knee": 5,
+          "automakeup": false
+        },
+        "chorus": {
+          "bypass": 1,
+          "feedback": 0.4,
+          "delay": 0.0045,
+          "depth": 0.7,
+          "rate": 1.5
+        },
+        "tremolo": {
+          "bypass": 1,
+          "intensity": 0.3,
+          "stereoPhase": 0,
+          "rate": 5
+        },
+        "delay": {
+          "bypass": 1,
+          "delayTime": 100,
+          "feedback": 0.45,
+          "cutoff": 20000,
+          "wetLevel": 0.5,
+          "dryLevel": 1
+        },
+        "reverb": {
+          "bypass": 1,
+          "highCut": 22050,
+          "lowCut": 20,
+          "dryLevel": 1,
+          "wetLevel": 1,
+          "impulse": "impulses\/plate.wav"
+        }
+      },
+      "regions": [
+        {
+          "url": "sound\/octaves_left.mp3",
+          "start": 29.49,
+          "startOffset": 0,
+          "stopOffset": 42,
+          "fadeIn": 0,
+          "fadeOut": 1.5
+        }
+      ]
+    },
+    {
+      "name": "Octaves_Right",
+      "muted": false,
+      "_muted": false,
+      "soloed": false,
+      "volume": 0.45,
+      "pluginParams": {
+        "compressor": {
+          "bypass": 1,
+          "threshold": -20,
+          "release": 250,
+          "makeupGain": 1,
+          "attack": 1,
+          "ratio": 4,
+          "knee": 5,
+          "automakeup": false
+        },
+        "chorus": {
+          "bypass": 1,
+          "feedback": 0.4,
+          "delay": 0.0045,
+          "depth": 0.7,
+          "rate": 1.5
+        },
+        "tremolo": {
+          "bypass": 1,
+          "intensity": 0.3,
+          "stereoPhase": 0,
+          "rate": 5
+        },
+        "delay": {
+          "bypass": 1,
+          "delayTime": 100,
+          "feedback": 0.45,
+          "cutoff": 20000,
+          "wetLevel": 0.5,
+          "dryLevel": 1
+        },
+        "reverb": {
+          "bypass": 1,
+          "highCut": 22050,
+          "lowCut": 20,
+          "dryLevel": 1,
+          "wetLevel": 1,
+          "impulse": "impulses\/plate.wav"
+        }
+      },
+      "regions": [
+        {
+          "url": "sound\/octaves_right.mp3",
+          "start": 29.49,
+          "startOffset": 0,
+          "stopOffset": 42,
+          "fadeIn": 0,
+          "fadeOut": 1.5
+        }
+      ]
+    },
+    {
+      "name": "Handclaps",
+      "muted": false,
+      "_muted": false,
+      "soloed": false,
+      "volume": 0.73,
+      "pluginParams": {
+        "compressor": {
+          "bypass": 1,
+          "threshold": -20,
+          "release": 250,
+          "makeupGain": 1,
+          "attack": 1,
+          "ratio": 4,
+          "knee": 5,
+          "automakeup": false
+        },
+        "chorus": {
+          "bypass": 1,
+          "feedback": 0.4,
+          "delay": 0.0045,
+          "depth": 0.7,
+          "rate": 1.5
+        },
+        "tremolo": {
+          "bypass": 1,
+          "intensity": 0.3,
+          "stereoPhase": 0,
+          "rate": 5
+        },
+        "delay": {
+          "bypass": 1,
+          "delayTime": 100,
+          "feedback": 0.45,
+          "cutoff": 20000,
+          "wetLevel": 0.5,
+          "dryLevel": 1
+        },
+        "reverb": {
+          "bypass": 0,
+          "highCut": 22050,
+          "lowCut": 20,
+          "dryLevel": 1,
+          "wetLevel": 0.5,
+          "impulse": "impulses\/plate.wav"
+        }
+      },
+      "regions": [
+        {
+          "url": "sound\/handclaps.mp3",
+          "start": 14.09,
+          "startOffset": 0,
+          "stopOffset": 17,
+          "fadeIn": 0,
+          "fadeOut": 1
+        }
+      ]
+    }
+  ]
+}

@@ -182,6 +182,17 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       }
       this.set('buffer', ab);
       return this.sliceBuffer();
+    },
+
+    toJSON: function(){
+      return {
+        url: this.get('url'),
+        start: this.get('start'),
+        startOffset: this.get('startOffset'),
+        stopOffset: this.get('stopOffset'),
+        fadeIn: this.get('fadeIn'),
+        fadeOut: this.get('fadeOut')
+      }
     }
 
   });

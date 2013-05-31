@@ -3,7 +3,7 @@ App = new Backbone.Marionette.Application();
 App.on("start", function(options) {
   var mixURL = options.mixURL
     , ac = new webkitAudioContext()
-    , mix = new App.Models.Mix({context: ac, bpm: options.bpm})
+    , mix = new App.Models.Mix({context: ac})
     , downloader = new Downloader(function(){
         drawMix();
         mix.play();
@@ -12,7 +12,8 @@ App.on("start", function(options) {
   // grab some JSON
   function fetchMixData(){
     $.getJSON(mixURL, function( data ){
-      createTracks(data);
+      mix.set({bpm: data.bpm});
+      createTracks(data.tracks);
     });
   }
 
@@ -24,6 +25,7 @@ App.on("start", function(options) {
         volume: trackData.volume,
         output: mix.get('input'),
         collection: mix.tracks,
+        pluginParams: trackData.pluginParams || {},
         mix: mix
       });
       mix.tracks.add(track);

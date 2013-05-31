@@ -1,6 +1,6 @@
 App.module("Collections", function(Collections, App, Backbone, Marionette, $, _) {
   Collections.Tracks = Backbone.Collection.extend({
-    model: App.Track,
+    model: App.Models.Track,
 
     // begin playback of all tracks
     play: function(){
@@ -29,6 +29,14 @@ App.module("Collections", function(Collections, App, Backbone, Marionette, $, _)
         track.set('output', track.get('mix').get('input'));
         track.connect();
       });
+    },
+
+    toJSON: function(){
+      var result = [];
+      this.forEach(function( track ){
+        result.push(track.toJSON());
+      });
+      return result;
     }
 
   });

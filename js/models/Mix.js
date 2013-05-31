@@ -194,6 +194,13 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       }.bind(this), function(){
         console.log('couldn\'t get a stream');
       });
+    },
+
+    toJSON: function(){
+      return {
+        bpm: this.get('bpm'),
+        tracks: this.tracks.toJSON()
+      }
     }
 
   });

@@ -1,5 +1,6 @@
 App.module("Collections", function(Collections, App, Backbone, Marionette, $, _) {
   Collections.Regions = Backbone.Collection.extend({
+
     model: App.Models.Region,
     // begin playback of all regions
     play: function(){
@@ -21,6 +22,15 @@ App.module("Collections", function(Collections, App, Backbone, Marionette, $, _)
       return Math.max.apply(Math, this.map(function( region ){
         return region.maxTime();
       }));
+    },
+
+    toJSON: function(){
+      var result = [];
+      this.forEach(function( region ){
+        result.push(region.toJSON());
+      });
+      return result;
     }
+
   });
 });
