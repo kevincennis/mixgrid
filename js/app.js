@@ -61,10 +61,21 @@ App.on("start", function(options) {
       track.regions.forEach(function( region ){
         var $div = $('<div/>').appendTo($section);
         region.on('change', function(){
-          var start = region.get('start')
+          var svg
+            , start = region.get('start')
             , length = region.get('activeBuffer').duration;
           $div.css({left: start * pps, width: length * pps});
         });
+        svg = new waveSvg({
+          buffer: region.get('activeBuffer'),
+          maxHeight: 80,
+          width: pps * length,
+          pixelsPerSecond: pps,
+          downSample: 16,
+          appendTo: $div[0],
+          workerPath: '/js/peak-worker.js'
+        });
+        region.set('svg', svg);
         region.trigger('change');
       });
     });
