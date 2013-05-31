@@ -73,7 +73,7 @@ App.on("start", function(options) {
           pixelsPerSecond: pps,
           downSample: 16,
           appendTo: $div[0],
-          workerPath: '/js/peak-worker.js'
+          workerPath: 'js/peak-worker.js'
         });
         region.set('svg', svg);
         region.trigger('change');
