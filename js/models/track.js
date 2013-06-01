@@ -255,6 +255,7 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
         buffer: audioBuffer,
         start: this.get('recordStart'),
         output: this.get('input'),
+        track: this,
         mix: this.get('mix')
       });
     },

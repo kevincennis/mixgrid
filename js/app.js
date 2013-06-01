@@ -44,6 +44,7 @@ App.on("start", function(options) {
         ac.decodeAudioData(xhr.response, function( buffer ){
           regionData.buffer = buffer;
           regionData.output = track.get('input');
+          regionData.track = track;
           regionData.mix = track.get('mix');
           track.regions.add(regionData);
           downloaderCallback();
