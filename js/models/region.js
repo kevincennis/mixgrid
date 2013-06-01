@@ -184,6 +184,35 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       return this.sliceBuffer();
     },
 
+    // copy the entire region
+    copy: function(){
+      return this.clone();
+    },
+
+    // slice a region in half.
+    // modifies the original region's stopOffset and the cloned
+    // region's startOffset. also remove fades along the
+    // split edge
+    // 
+    // seconds param is relative to the region's start attribute
+    slice: function( seconds ){
+      var clone = this.copy()
+        , start = this.get('start')
+        , stopOffset = this.get('stopOffset')
+        , startOffset = this.get('startOffset')
+        , duration = this.get('activeBuffer').duration;
+      this.set({
+        stopOffset: stopOffset + ( duration - seconds ),
+        fadeOut: 0
+      });
+      clone.set({
+        startOffset: startOffset + seconds,
+        fadeIn: 0
+      });
+      this.get('track').paste(clone);
+
+    },
+
     toJSON: function(){
       return {
         url: this.get('url'),

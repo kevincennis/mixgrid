@@ -260,6 +260,11 @@ App.module("Models", function(Models, App, Backbone, Marionette, $, _) {
       });
     },
 
+    // add a new region instance to the track
+    paste: function( region ){
+      this.regions.add(region);
+    },
+
     // set an individual plugin param
     setPluginParam: function( plugin, param, val ){
       this.get('pluginParams')[plugin][param] = val;
